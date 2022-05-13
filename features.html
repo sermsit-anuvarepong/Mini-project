@@ -1,0 +1,519 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<!-- Link library leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin="" />
+
+
+
+<!-- W3 CSS template -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+
+
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin="">
+</script>
+
+
+
+<style>
+#mapid {
+height: 800px;
+}
+</style>
+
+
+
+<title>Tourist map</title>
+</head>
+<body style="background-image: url(https://markallenassets.blob.core.windows.net/ccinform/2021/02/covid-19-vaccine-AdobeStock_327257834-Leigh-Prather-760.jpg);background-position: center;
+    background-repeat: no-repeat; background-size: cover;">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <header class="mb-auto" style="background-color:black">
+        <div>
+          <h3 class="float-md-start mb-0"style="color:white">Mini Project</h3>
+          <nav class="nav nav-masthead justify-content-center float-md-end">
+            <a class="nav-link active" href="index.html">Home</a>
+            <a class="nav-link active" href="#">Features</a>
+            <a class="nav-link active" href="contact.html">Contact</a>
+          </nav>
+        </div>
+      </header>
+      <main class="px-3" align='center' style="background-color:lightblue">
+        <h1>เเผนที่รายงานสถานการณ์การฉีดวัคซีนเชิงพื้นที่ภาคกลางระหว่างวันที่ 28กุมภาพันธ์ 2564 - 1พฤษภาคม 2565</h1>
+        <p align='center'>ข้อมูลจาก<a href="https://ddc.moph.go.th/vaccine-covid19/diaryReport">กรมควบคุมโรค</a>,จัดทำเว็บโดย <a href="#">คณะผู้จัดทำ</a>.</p>
+<!-- แบ่งหน้าจอ -->
+<div class="w3-row">
+<div id="mapid" class="w3-half"></div>
+<div id="content" class="w3-half">
+<table class="w3-table w3-striped">
+<tr>
+  <th>จังหวัด</th>
+  <th>จำนวนคนฉีดเข็ม1</th>
+  <th>จำนวนคนฉีดเข็ม2</th>
+  <th>จำนวนคนฉีดเข็ม3</th>
+  <th>รวม</th>
+</tr>
+<tr>
+<td>น้ำตก A</td>
+<td>ธรรมชาติ</td>
+<td>A</td>
+</tr>
+</table>
+</div>
+</div>
+
+
+
+<!-- เรียกแผนที่ขึ้นมาแสดง -->
+<script>
+var map = L.map("mapid").setView([13.75851958059117, 100.48521990482732],8);
+var osm = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}").addTo(map);
+var gsat = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}").addTo(map);
+var OpenStreetMap_France = L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png").addTo(map);
+var baseMaps ={
+  ESWI:osm,
+  NGWM:gsat,
+  France:OpenStreetMap_France,
+};
+//add data
+var tourpoint = {
+type: "FeatureCollection",
+name: "tour_plk",
+crs: {
+type: "name",
+properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" },
+},
+features: [
+{
+type: "Feature",
+properties: {
+Name: "กรุงเทพมหานคร",
+Type: "9,868,566",
+FID_1: 1358.0,
+level: "904,4704",
+level1: "6,336,438",
+level2: "25,249,708",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.55345885329102,13.759239468994522]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "กาญจนบุรี",
+Type: "563,027",
+FID_1: 1357.0,
+level: "512,545",
+level1: "201,620",
+level2: "1,277,192",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[99.01932067525655,14.55081617865057]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "ฉะเชิงเทรา",
+Type: "716,731",
+FID_1: 1362.0,
+level: "604,617",
+level1: "342,102",
+level2: "1,663,450",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[101.42354241204605,13.63613829341261]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "ชัยนาท",
+Type: "213,191",
+FID_1: 1364.0,
+level: "197,870",
+level1: "109,517",
+level2: "520,578",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.02837028681265,15.121975790273693]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "นครนายก",
+Type: "169,899",
+FID_1: 1355.0,
+level: "158,188",
+level1: "87,030",
+level2: "415,117",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[101.1681556100222,14.220774332491752]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "นครปฐม",
+Type: "709,518",
+FID_1: 1365.0,
+level: "683,032",
+level1: "369,648",
+level2: "1,762,198",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.10122102735274,13.911134443179918]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "นนทบุรี",
+Type: "1,172,664",
+FID_1: 733.0,
+level: "1,098,741",
+level1: "918,640",
+level2: "3,190,045",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.39784507057031,13.909206806285246]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "ปทุมธานี",
+Type: "1,369,112",
+FID_1: 1359.0,
+level: "1,263,682",
+level1: "604,570",
+level2: "3,237,364",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.67269890061371,14.05333526869121]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "ประจวบคีรีขันธ์",
+Type: "451,116",
+FID_1: 603.0,
+level: "411,691",
+level1: "172,968",
+level2: "1,035,775",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[99.69989882805609,11.797840593395097]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "พระนครศรีอยุธยา",
+Type: "693,593",
+FID_1: 611.0,
+level: "655,503",
+level1: "452,190",
+level2: "1,801,286",
+},
+geometry: { type: "MultiPoint", coordinates: [[100.51653361134026,14.327551167461698]] },
+},
+{
+type: "Feature",
+properties: {
+Name: "ราชบุรี",
+Type: "569,390",
+FID_1: 1370.0,
+level: "543,440",
+level1: "240,767",
+level2: "1,353,597",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[99.63057157160557,13.545030791199752]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "ลพบุรี",
+Type: "462,018",
+FID_1: 781.0,
+level: "433,431",
+level1: "232,824",
+level2: "1,128,273",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.90192846628722,15.083618080764639]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "สมุทรปราการ",
+Type: "1,730,299",
+FID_1: 364.0,
+level: "1,503,406",
+level1: "1,172,713",
+level2: "4,406,418",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.62246684156781,13.593002867652647]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "สมุทรสาคร",
+Type: "971,327",
+FID_1: 450.0,
+level: "892,225",
+level1: "389,044",
+level2: "2,252,596",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.2008560328985,13.567671603451926]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "สมุทรสงคราม",
+Type: "129,397",
+FID_1: 62.0,
+level: "118,949",
+level1: "64,382",
+level2: "312,728",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[99.9648934925301,13.402806721706016]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "สระบุรี",
+Type: "525,391",
+FID_1: 745.0,
+level: "505,745",
+level1: "300,682",
+level2: "1,331,818",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.9856968703141,14.565490928846076]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "สิงห์บุรี",
+Type: "143,306",
+FID_1: 763.0,
+level: "134,377",
+level1: "72,653",
+level2: "350,336",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.34380230712668,14.905891950706215]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "สุพรรณบุรี",
+Type: "535,407",
+FID_1: 773.0,
+level: "498,447",
+level1: "208,544",
+level2: "1,242,398",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[99.97486014002523,14.580916843324436]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "อ่างทอง",
+Type: "179,085",
+FID_1: 643.0,
+level: "169,820",
+level1: "95,929",
+level2: "444,834",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[100.31699904236677,14.632549046211714]],
+},
+},
+{
+type: "Feature",
+properties: {
+Name: "เพชรบุรี",
+Type: "386,205",
+FID_1: 642.0,
+level: "353,435",
+level1: "146,593",
+level2: "886,233",
+},
+geometry: {
+type: "MultiPoint",
+coordinates: [[99.63270749799914,12.946881241134726]],
+},
+},
+],
+};
+
+//add maker and popup
+var tourLayer = L.geoJSON(tourpoint, {
+pointToLayer: function (feature, latlng) {
+return L.marker(latlng).bindPopup(feature.properties.Name);
+},
+onEachFeature: function (feature, layer) {
+layer.on("mouseover", function () {
+document
+.getElementById(feature.properties.FID_1)
+.classList.add("w3-red");
+});
+
+
+
+layer.on("mouseout", function () {
+document
+.getElementById(feature.properties.FID_1)
+.classList.remove("w3-red");
+});
+},
+}).addTo(map);
+//Link table with popup and marker
+var cont = "";
+cont += "<table class='w3-table w3-striped'>";
+cont += "<tr>";
+cont += "<th>จังหวัด</th>";
+cont += "<th>จำนวนคนฉีดเข็ม1</th>";
+cont += "<th>จำนวนคนฉีดเข็ม2</th>";
+cont += "<th>จำนวนคนฉีดเข็ม3</th>";
+cont += "<th>รวม</th>";
+cont += "</tr>";
+for (let i in tourpoint.features) {
+cont += "<tr id=" + tourpoint.features[i].properties.FID_1 + ">";
+cont += "<td>" + tourpoint.features[i].properties.Name + "</td>";
+cont += "<td>" + tourpoint.features[i].properties.Type + "</td>";
+cont += "<td>" + tourpoint.features[i].properties.level + "</td>";
+cont += "<td>" + tourpoint.features[i].properties.level1 + "</td>";
+cont += "<td>" + tourpoint.features[i].properties.level2 + "</td>";
+cont += "</tr>";
+}
+cont += "</table>";
+console.log(cont);
+document.getElementById("content").innerHTML = cont;
+
+var polygonGeoJson = {
+  "type": "FeatureCollection",
+   "features": [
+     {
+       "type": "Feature",
+       "properties": {
+         "stroke": "#e60000",
+         "stroke-width": 2,
+         "stroke-opacity": 1,
+         "fill": "#f50000",
+         "fill-opacity": 0.5
+       },
+       "geometry": {
+         "type": "Polygon",
+         "coordinates": [
+           [
+             [
+               139.4110107421875,
+               35.91685961322499
+             ],
+             [
+               139.41513061523438,
+               35.48751102385376
+             ],
+             [
+               139.98092651367188,
+               35.48415637985317
+             ],
+             [
+               139.97817993164062,
+               35.9190839537629
+             ],
+             [
+               139.4110107421875,
+               35.91685961322499
+             ]
+           ]
+         ]
+       }
+     }
+   ]
+ }
+
+var polygonLayer = L.geoJSON(polygonGeoJson, {
+style: function (feature) {
+return { color: feature.properties.color };
+},
+onEachFeature: function (feature, layer) {
+layer.bindPopup(feature.properties.name);
+
+
+
+layer.on("mouseover", function () {
+layer.openPopup();
+});
+
+
+
+layer.on("mouseout", function () {
+layer.closePopup();
+});
+},
+});
+
+var overlays = {
+  สถานที่ท่องเที่ยวในโตเกียว:tourLayer,
+  ขอบเขตเเหล่งท่องเที่ยว:polygonLayer
+};
+
+L.control.layers(baseMaps,overlays).addTo(map);
+</script>
+<p class="lead" align='center'>
+  <a href="index.html" class="btn btn-lg btn-secondary fw-bold border-white bg-black" style="color:white;">ย้อนกลับ</a>
+</main>
+</div>
+
+
+</body>
+</html>
